@@ -10,8 +10,12 @@ const acTempDownButton = document.getElementById('ac-temp-down');
 const acTempDisplay = document.getElementById('ac-temp-display');
 
 
+function acPowerButton(){
+    let isOn = acPowerButton.classList.contains("active");
+}
+
 function sendAPIRequest(endpoint, method, data = null) {
-  return fetch(<span class="math-inline">\{API\_URL\}/</span>{endpoint}, {
+  return fetch(, {
     method,
     headers: {
       'Content-Type': 'application/json', // Adjust if necessary based on API requirements

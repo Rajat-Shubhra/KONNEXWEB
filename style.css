@@ -43,3 +43,7 @@ body {
     margin: 10px;
     text-align:center;
 }
+
+.device-icon{
+    height:64px;
+}
