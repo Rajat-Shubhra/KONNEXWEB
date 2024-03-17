@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home Control Center</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Smart Home Control</h1>
+        </header>
+        <main class="main">
+            <div class="device-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/556/556878.png" alt="Fan" class="device-icon">
+                <h2>Fan</h2>
+                <div class="slider-container">
+                    <input type="range" min="0" max="100" value="50" class="device-slider" id="fan-slider" data-device="fan">
+                    <span class="slider-value">50%</span>
+                </div>
+            </div>
+            <div class="device-card">
+                <img src="images/bulb.svg" alt="Bulb" class="device-icon">
+                <h2>Bulb</h2>
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="bulb-switch" data-device="bulb">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="device-card">
+                <img src="images/led-strip.svg" alt="LED Strip" class="device-icon">
+                <h2>LED Strip</h2>
+                <div class="color-picker-container">
+                    <input type="color" id="led-color-picker" data-device="led_strip">
+                    <button class="led-power-button" id="led-power-button">Off</button>
+                </div>
+            </div>
+            <div class="device-card">
+                <img src="images/ac.svg" alt="AC" class="device-icon">
+                <h2>AC</h2>
+                <div class="ac-controls">
+                    <button class="ac-button" id="ac-power-button">Off</button>
+                    <div class="ac-temperature-control">
+                        <button class="ac-button" id="ac-temp-up">+</button>
+                        <span id="ac-temp-display">24°C</span>
+                        <button class="ac-button" id="ac-temp-down">-</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>&copy; 2024 Smart Home Solutions</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
