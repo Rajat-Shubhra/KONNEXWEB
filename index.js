@@ -1,5 +1,6 @@
-const API_URL = 'https://kdss.konnexions.dev/simulation/devices/SgkhbB'; 
 
+const API_URL = 'https://kdss.konnexions.dev/simulation/devices'; 
+ 
 const sliders = document.querySelectorAll('.device-slider');
 const ledSwitch = document.querySelector('.switch input[data-device="led_strip"]'); // Assuming LED switch
 const colorPicker = document.getElementById('led-color-picker');
@@ -13,9 +14,73 @@ const acTempDisplay = document.getElementById('ac-temp-display');
 function acPowerButton(){
     let isOn = acPowerButton.classList.contains("active");
 }
+async function fetchData() {
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json(); // Parse JSON response
+    console.log(data); // Your API data
+  } catch (error) {
+    console.error('API Error:', error);
+  }
+}
+
+fetchData();
+
+
+// function sendAPIRequest(endpoint, method, data = null) {
+//   return fetch(`https://kdss.konnexions.dev/simulation/devices/SgkhbB`, {
+//     method:,
+//     headers: {
+//       'Content-Type': 'application/json', // Adjust if necessary based on API requirements
+//       // Add authorization headers if required by the API
+//     },
+//     body: data ? JSON.stringify(data) : null,
+//   })
+//   .then(response => response.json())
+//   .catch(error => console.error('API Error:', error));
+// }
+
+// const API_URL = 'https://kdss.konnexions.dev/simulation/devices/SgkhbB';
+
+// ... other code elements (sliders, buttons, etc.)
+
+
+const fs = require('fs');
+function readFanSpeedData() {
+  try {
+    const data = fs.readFileSync('fan_speed_data.json', 'utf8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error reading fan speed data:', error);
+    return null; // Handle errors gracefully, provide defaults if needed
+  }
+} 
+
+// const API_URL = 'https://kodessphere-api.vercel.app/devices'; // Replace with your API URL
+const API_HEADERS = { 'Content-Type': 'application/json' }; // Adjust headers if necessary
+
+function sendFanSpeedRequest(newSpeed) {
+    const data = { speed: newSpeed }; // Prepare JSON data to send
+  
+    fetch(`https://kodessphere-api.vercel.app/devices`, {
+      method: 'POST',
+      headers: API_HEADERS,
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("API request failed with status ${response.status}");
+      }
+      console.log('Fan speed change request successful!');
+    })
+    .catch(error => {
+      console.error('Error sending fan speed request:', error);
+    });
+  }
+
 
 function sendAPIRequest(endpoint, method, data = null) {
-  return fetch(, {
+  return fetch(`https://kdss.konnexions.dev/simulation/devices/SgkhbB`, {
     method,
     headers: {
       'Content-Type': 'application/json', // Adjust if necessary based on API requirements
@@ -23,9 +88,30 @@ function sendAPIRequest(endpoint, method, data = null) {
     },
     body: data ? JSON.stringify(data) : null,
   })
-  .then(response => response.json())
-  .catch(error => console.error('API Error:', error));
+    .then(response => response.json())
+    .catch(error => console.error('API Error:', error));
 }
+
+// Handle LED brightness slider change
+const brightnessSlider = document.getElementById('led-brightness-slider');
+
+brightnessSlider.addEventListener('input', async () => {
+  const brightness = brightnessSlider.value; // Get the new brightness value
+
+  try {
+    const response = await sendAPIRequest('/led-brightness', 'POST', { brightness }); // Assuming the API endpoint is '/led-brightness' and expects 'brightness' in the request body
+
+    if (response.success) {
+      console.log('LED brightness updated successfully!');
+
+    } else {
+      console.error('API Error:', response.error);
+
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+});
 
 
 function updateSliderValue(slider, value) {
@@ -110,3 +196,7 @@ ledPowerButton.addEventListener('click', async () => {
       console.error('API Error:', response.error);
       // Implement error handling UI (e.g., toast notification)
     }
+    } catch (err) {
+        console.error("Error sending request", err);
+    }
+});
